@@ -9,17 +9,25 @@ function App() {
     <Router>
     <div className="App">
       <Routes>
-       {publicRoutes.map((route, index)=>{
-        let layout = DefaultLayout;
-        if( layout === null )
-        {
-          layout = Fragment
-        }else {
-          layout = route.layout;
-        }
-        const Page = route.Component;
-         return <Route key={index} path={route.path} element= {<Page />} />
-        
+       {publicRoutes.map((route, index) => {
+         let Layout = DefaultLayout;
+         if (route.layout === null) {
+           Layout = Fragment;
+         } else if (route.layout) {
+           Layout = route.layout;
+         }
+         const Page = route.Component;
+         return (
+           <Route
+             key={index}
+             path={route.path}
+             element={
+               <Layout>
+                 <Page />
+               </Layout>
+             }
+           />
+         );
        })}
     
        
