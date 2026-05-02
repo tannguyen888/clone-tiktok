@@ -9,6 +9,8 @@
   --default-layout-height-header: 60px;
   //contetn
   --default-layout-width-content: 1150px;
+  --black-color: #000;
+  --text-color: #333;
 }
 *{
   margin: 0;
@@ -24,4 +26,14 @@ body{
      font-size: 1.6rem;
      line-height: 1.5;
      text-rendering: optimizeLegibility;
+}
+
+button, input, [tabindex]{
+  border: none;
+  outline: none;
+}
+
+a[href]
+{
+  color: var(--text-color);
 }
