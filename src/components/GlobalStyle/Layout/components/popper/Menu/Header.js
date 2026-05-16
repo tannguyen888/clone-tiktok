@@ -1,0 +1,23 @@
+
+import classNames from 'classnames/bind';
+import Styles from './Menu.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons/faChevronCircleLeft';
+
+
+const cx = classNames.bind(Styles);
+
+function Menu({title, onBack}) {
+  
+    return (  
+        <header className={cx('header')}>
+            <button className={cx('back-btn')} onClick={onBack}>
+                
+                <FontAwesomeIcon icon={faChevronCircleLeft}/>
+            </button>
+            <h4 className={cx('header-title')}>{title}</h4>
+        </header>
+     );
+}
+
+export default Menu;

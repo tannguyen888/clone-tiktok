@@ -13,6 +13,7 @@
 .inner{
     height:100%;
     width:var(--default-layout-width-content, 1150px);
+    padding: 0 var(--default-layout-horziontal-spacer, 24px);
     background-color:var(--white-color, #fff);
     display: flex;
     align-items: center;
@@ -73,7 +74,8 @@
 
 }
 .logo{
-
+    display: flex;
+    align-items: center;
 }
 
 .search-btn{
@@ -101,8 +103,20 @@
 }
 
 
+.more-btn{
+  font-size: 2rem;
+  margin-left: 28px;
+  padding:4px 8px;
+  background: transparent;
+
+}
 // .custom-login{
 //     display: flex;
 //     align-items: center;
 //     gap: 8px;
 // }
+
+.menu-itmes
+{
+width: 220px;
+}
