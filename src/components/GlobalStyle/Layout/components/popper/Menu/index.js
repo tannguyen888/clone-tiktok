@@ -33,6 +33,8 @@ function Menu({children, items = [], onChange = defaultFn}) {
     return (   <Tippy 
                             interactive
                             placement='bottom-end'
+                            delay={[0, 700]}
+                  offset={[12, 8]}
                             render={attr => (
                                 <div className ={cx('content')} tabIndex="-1" {...attr}>
                                     <PopperWrapper> 
