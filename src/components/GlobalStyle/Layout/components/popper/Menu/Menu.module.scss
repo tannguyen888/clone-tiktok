@@ -4,17 +4,20 @@ width: 224px;
 
 
 .menu-item{
-    margin-left:0px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    padding: 12px 0;
+   width: 100%;
+    justify-content: flex-start;
+    border-radius: 0;
+    padding: 11px 16px;
     line-height: 1.8rem;
-    
-    &:hover{
-    background-color: rgba(22, 24, 35, 0.03);
-    cursor: pointer;
-}
+    font-weight: 600;
+
+    &.separate {
+        border-top: 1px solid rgba(22, 24, 35, 0.12);
+    }
+
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.03);
+    }
 }
 
 }
