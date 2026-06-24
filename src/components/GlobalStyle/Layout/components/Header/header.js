@@ -1,7 +1,7 @@
 import HeaderStyles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion, faCircleXmark, faCloudUpload, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faMessage, faSignIn, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion,  faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard,faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import img from '~/assets/img';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -13,15 +13,18 @@ import Menu from '../popper/Menu';
 import Image from '../Image';
 import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
-
+import { InboxIcon, MessageIcon, UploadIcon } from '../Icons/UploadIcon';
+import images from '~/assets/img';
+import config from '~/config';
+import { Link } from 'react-router-dom';
+import Search from '../Search/Search';
 const cx = classNames.bind(HeaderStyles);
 
 const MENU_ITEMS = [
-  
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
         title: 'English',
-       children: {
+        children: {
             title: 'Language',
             data: [
                 {
@@ -36,22 +39,32 @@ const MENU_ITEMS = [
                 },
             ],
         },
-
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
         title: 'Feedback and help',
-        to:'/feedback'
-
+        to: '/feedback',
     },
     {
         icon: <FontAwesomeIcon icon={faKeyboard} />,
         title: 'Keyboard shortcuts',
-       
+    },
+];
 
-    }
-]
-  const userMenu = [
+function Header() {
+    const currentUser = true;
+
+    // Handle logic
+    const handleMenuChange = (menuItem) => {
+        switch (menuItem.type) {
+            case 'language':
+                // Handle change language
+                break;
+            default:
+        }
+    };
+
+    const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View profile',
@@ -76,69 +89,32 @@ const MENU_ITEMS = [
         },
     ];
 
-function Header () {
-    const currentUser = true; // This should be replaced with actual user authentication logic
-    const [showSearchResult, setShowSearchResult] = useState(false);
-
-    const handleSearchKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            setShowSearchResult(true);
-        }
-    };
- 
-    const handleMenuChange = (menuItem) => {
-        switch(menuItem.type) {
-            case 'language':
-                console.log('Language changed to:', menuItem.code);
-                break;
-            default:
-        }
-    };
-
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('logo')}>
-                    <img src={img.logo} alt="TikTok Logo" />
-                </div>
+                <Link to={config.routes.home} className={cx('logo-link')}>
+                    <img src={images.logo} alt="Tiktok" />
+                </Link>
 
-                <div className={cx('search')}>
-                    <HeadlessTippy
-                        visible={showSearchResult}
-                        render={attr => (
-                            <div className={cx('search-result')} tabIndex="-1" {...attr}>
-                                <PopperWrapper>
-                                    <AccountItem data={{ nickname: 'user1', full_name: 'User One', avatar: '', tick: false }} />
-                                    <AccountItem data={{ nickname: 'user2', full_name: 'User Two', avatar: '', tick: false }} />
-                                    <AccountItem data={{ nickname: 'user3', full_name: 'User Three', avatar: '', tick: false }} />
-                                </PopperWrapper>
-                            </div>
-                        )}
-                    >
-                        <input
-                            placeholder='Search Acounts and Videos'
-                            spellCheck={false}
-                            onKeyDown={handleSearchKeyDown}
-                        />
-                    </HeadlessTippy>
+                <Search />
 
-                    <button className={cx('clear')}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
-
-                    <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-
-                    <button className={cx('search-btn')}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
-                </div>
-
-                <div className={cx('action')}>
-                   {currentUser ? (
+                <div className={cx('actions')}>
+                    {currentUser ? (
                         <>
-                            <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
+                            <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <UploadIcon />
+                                </button>
+                            </Tippy>
+                            <Tippy delay={[0, 50]} content="Message" placement="bottom">
+                                <button className={cx('action-btn')}>
+                                    <MessageIcon />
+                                </button>
+                            </Tippy>
+                            <Tippy delay={[0, 50]} content="Inbox" placement="bottom">
+                                <button className={cx('action-btn')}>
+                                    <InboxIcon />
+                                    <span className={cx('badge')}>12</span>
                                 </button>
                             </Tippy>
                         </>
@@ -149,12 +125,11 @@ function Header () {
                         </>
                     )}
 
-
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/ea0854578085ab26effc2c7b8cefa270~c5_100x100.jpeg?x-expires=1651658400&x-signature=zeUCDyTxctGYZ5%2Bsh422klviXFE%3D"
+                                src="https://files.f8.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
                                 alt="Nguyen Van A"
                             />
                         ) : (
@@ -163,9 +138,6 @@ function Header () {
                             </button>
                         )}
                     </Menu>
-
-
-
                 </div>
             </div>
         </header>
