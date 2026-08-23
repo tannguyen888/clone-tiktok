@@ -5,9 +5,9 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import * as searchServices from '~/services/searchService';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
-import { SearchIcon } from '~/components/Icons';
+import { Wrapper as PopperWrapper } from '~/components/GlobalStyle/components/popper';
+import AccountItem from '~/components/GlobalStyle/components/AccountItems';
+import { SearchIcon } from '~/components/GlobalStyle/components/Icons/UploadIcon';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
 
@@ -26,16 +26,18 @@ function Search() {
     useEffect(() => {
         if (!debouncedValue.trim()) {
             setSearchResult([]);
+            setLoading(false);
             return;
         }
 
         const fetchApi = async () => {
             setLoading(true);
-
-            const result = await searchServices.search(debouncedValue);
-
-            setSearchResult(result);
-            setLoading(false);
+            try {
+                const result = await searchServices.search(debouncedValue);
+                setSearchResult(result);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchApi();
@@ -52,7 +54,7 @@ function Search() {
     };
 
     const handleChange = (e) => {
-        const searchValue = e.target.value;
+        const searchValue = e.target.value.trimStart();
         if (!searchValue.startsWith(' ')) {
             setSearchValue(searchValue);
         }
@@ -64,14 +66,17 @@ function Search() {
         <div>
             <HeadlessTippy
                 interactive
-                visible={showResult && searchResult.length > 0}
+                visible={showResult && (!!searchValue.trim() || loading)}
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
                             <h4 className={cx('search-title')}>Accounts</h4>
-                            {searchResult.map((result) => (
-                                <AccountItem key={result.id} data={result} />
-                            ))}
+                            {loading && <p className={cx('empty-result')}>Searching...</p>}
+                            {!loading && searchResult.length === 0 && (
+                                <p className={cx('empty-result')}>No accounts found</p>
+                            )}
+                            {!loading &&
+                                searchResult.map((result) => <AccountItem key={result.id} data={result} />)}
                         </PopperWrapper>
                     </div>
                 )}

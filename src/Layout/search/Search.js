@@ -5,9 +5,9 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import * as searchServices from '~/services/searchService';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
-import { SearchIcon } from '~/components/Icons';
+import { Wrapper as PopperWrapper } from '~/components/GlobalStyle/components/popper';
+import AccountItem from '~/components/GlobalStyle/components/AccountItems';
+import { SearchIcon } from '~/components/GlobalStyle/components/Icons/UploadIcon';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
 

@@ -1,4 +1,4 @@
-import Header from '../../components/Header/header';
+import Header from '~/components/GlobalStyle/components/Header/header';
 
 function HeaderOnly() {
     return (
